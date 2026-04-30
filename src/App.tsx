@@ -10,47 +10,32 @@ function App() {
   const [ prevPage, setPrevPage ] = useState<string | null>(null)
   const [ isLoading, setIsLoading ] = useState(true)
 
+  const prevPageNumber = prevPage ? parseInt(prevPage.split('=')[1]) : 0
+  const first = 1 + (prevPageNumber * characters.length)
+  const last = first + characters.length - 1
+  const countMessage = `${first} to ${last} of ${count} characters`
+
   useEffect(() => {
-    setIsLoading(true)
-    fetch('https://swapi.py4e.com/api/people?page=1')
-      .then(res => res.json())
-      .then(data => {
-        setCharacters(data.results)
-        setCount(data.count)
-        setNextPage(data.next)
-        setPrevPage(data.previous)
-      })
-      .catch(err => {
-        console.error('Fetch failed:', err)
-      })
-      .finally(() => setIsLoading(false))
+    fetchCharacters('https://swapi.py4e.com/api/people?page=1')
   }, [])
 
   function handlePreviousClick() {
     if (!prevPage) return
-
-    setIsLoading(true)
-    fetch(prevPage)
-      .then(res => res.json())
-      .then(data => {
-        setCharacters(data.results)
-        setNextPage(data.next)
-        setPrevPage(data.previous)
-      })
-      .catch(err => {
-        console.error('Fetch failed:', err)
-      })
-      .finally(() => setIsLoading(false))
+    fetchCharacters(prevPage)
   }
 
   function handleNextClick() {
     if (!nextPage) return
+    fetchCharacters(nextPage)
+  }
 
+  function fetchCharacters(url: string) {
     setIsLoading(true)
-    fetch(nextPage)
+    fetch(url)
       .then(res => res.json())
       .then(data => {
         setCharacters(data.results)
+        setCount(data.count)
         setNextPage(data.next)
         setPrevPage(data.previous)
       })
@@ -72,7 +57,6 @@ function App() {
   return (
     <section>
       <h1>Star Wars API</h1>
-      <h3>Total Characters: {count}</h3>
       <article>
         {characters.map((character) => (
           <div key={character.name}>
@@ -80,6 +64,7 @@ function App() {
           </div>
         ))}
       </article>
+      <h3>{countMessage}</h3>
       <PaginationButtons  prevPage={prevPage} 
                           nextPage={nextPage} 
                           handlePreviousClick={handlePreviousClick} 
