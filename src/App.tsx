@@ -25,6 +25,40 @@ function App() {
       .finally(() => setIsLoading(false))
   }, [])
 
+  function handlePreviousClick() {
+    if (!prevPage) return
+
+    setIsLoading(true)
+    fetch(prevPage)
+      .then(res => res.json())
+      .then(data => {
+        setCharacters(data.results)
+        setNextPage(data.next)
+        setPrevPage(data.previous)
+      })
+      .catch(err => {
+        console.error('Fetch failed:', err)
+      })
+      .finally(() => setIsLoading(false))
+  }
+
+  function handleNextClick() {
+    if (!nextPage) return
+
+    setIsLoading(true)
+    fetch(nextPage)
+      .then(res => res.json())
+      .then(data => {
+        setCharacters(data.results)
+        setNextPage(data.next)
+        setPrevPage(data.previous)
+      })
+      .catch(err => {
+        console.error('Fetch failed:', err)
+      })
+      .finally(() => setIsLoading(false))
+  }
+
   if (isLoading) {
     return (
       <section>
@@ -44,6 +78,18 @@ function App() {
           </div>
         ))}
       </article>
+      <section className="ctrl-buttons">
+        <article  className="is-flex is-justify-content-space-between">
+          <button disabled={!prevPage}
+                  onClick={handlePreviousClick}>
+            Previous
+          </button>
+          <button disabled={!nextPage}
+                  onClick={handleNextClick}>
+            Next
+          </button>
+        </article>
+      </section>
     </section>
   )
 }
