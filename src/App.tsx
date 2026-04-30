@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import type { Character } from './types/character'
+import PaginationButtons from './components/PaginationButtons'
 
 function App() {
   const [ characters, setCharacters ] = useState<Character[]>([])
@@ -71,6 +72,7 @@ function App() {
   return (
     <section>
       <h1>Star Wars API</h1>
+      <h3>Total Characters: {count}</h3>
       <article>
         {characters.map((character) => (
           <div key={character.name}>
@@ -78,18 +80,10 @@ function App() {
           </div>
         ))}
       </article>
-      <section className="ctrl-buttons">
-        <article  className="is-flex is-justify-content-space-between">
-          <button disabled={!prevPage}
-                  onClick={handlePreviousClick}>
-            Previous
-          </button>
-          <button disabled={!nextPage}
-                  onClick={handleNextClick}>
-            Next
-          </button>
-        </article>
-      </section>
+      <PaginationButtons  prevPage={prevPage} 
+                          nextPage={nextPage} 
+                          handlePreviousClick={handlePreviousClick} 
+                          handleNextClick={handleNextClick}/>
     </section>
   )
 }
