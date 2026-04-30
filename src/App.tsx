@@ -4,6 +4,7 @@ import type { ApiResponse } from './types/character'
 import PaginationButtons from './components/PaginationButtons'
 
 function App() {
+  const [page, setPage] = useState(1)
   const [data, setData] = useState<ApiResponse | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
@@ -12,41 +13,36 @@ function App() {
   const characters = data?.results ?? []
   const prevPage = data?.previous ?? null
   const nextPage = data?.next ?? null
-
-  const getPageNumber = (url: string | null) => {
-    if (!url) return 0
-    return Number(new URL(url).searchParams.get('page')) || 0
-  }
   
-  const currentPage =
-    getPageNumber(nextPage) - 1 ||
-    getPageNumber(prevPage) + 1 ||
-    1
-  const first = (currentPage - 1) * (characterCount) + 1
+  const pageSize = 10
+  const first = (page - 1) * pageSize + 1
   const last = first + characterCount - 1
   const countMessage = `${first} to ${last} of ${totalCount} characters`
 
-  const fetchCharacters = useCallback((url: string) => {
+  const fetchCharacters = useCallback((page: number) => {
     setIsLoading(true)
-    fetch(url)
+    fetch(`https://swapi.py4e.com/api/people?page=${page}`)
       .then(res => res.json())
-      .then(data => setData(data))
+      .then(data => {
+        setData(data)
+        setPage(page)
+      })
       .catch(err => console.error(err))
       .finally(() => setIsLoading(false))
   }, [])
 
   useEffect(() => {
-    fetchCharacters('https://swapi.py4e.com/api/people?page=1')
+    fetchCharacters(page)
   }, [])
 
   function handlePreviousClick() {
     if (!data?.previous) return
-    fetchCharacters(data.previous)
+    fetchCharacters(page - 1)
   }
 
   function handleNextClick() {
     if (!data?.next) return
-    fetchCharacters(data.next)
+    fetchCharacters(page + 1)
   }
 
   if (isLoading) {
