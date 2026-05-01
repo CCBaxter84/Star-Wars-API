@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import type { ApiResponse } from './types/character'
 import PaginationButtons from './components/PaginationButtons'
@@ -19,7 +19,7 @@ function App() {
   const last = first + characterCount - 1
   const countMessage = `${first} to ${last} of ${totalCount} characters`
 
-  const fetchCharacters = useCallback((page: number) => {
+  function fetchCharacters(page: number) {
     setIsLoading(true)
     fetch(`https://swapi.py4e.com/api/people?page=${page}`)
       .then(res => res.json())
@@ -29,7 +29,7 @@ function App() {
       })
       .catch(err => console.error(err))
       .finally(() => setIsLoading(false))
-  }, [])
+  }
 
   useEffect(() => {
     fetchCharacters(page)
