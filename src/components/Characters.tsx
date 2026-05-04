@@ -12,7 +12,7 @@ function Characters() {
     const characters = data?.results ?? []
     const prevPage = data?.previous ?? null
     const nextPage = data?.next ?? null
-    
+
     const pageSize = 10
     const first = (page - 1) * pageSize + 1
     const last = first + characterCount - 1
@@ -21,13 +21,13 @@ function Characters() {
     function fetchCharacters(page: number) {
         setIsLoading(true)
         fetch(`https://swapi.py4e.com/api/people?page=${page}`)
-        .then(res => res.json())
-        .then(data => {
-            setData(data)
-            setPage(page)
-        })
-        .catch(err => console.error(err))
-        .finally(() => setIsLoading(false))
+            .then(res => res.json())
+            .then(data => {
+                setData(data)
+                setPage(page)
+            })
+            .catch(err => console.error(err))
+            .finally(() => setIsLoading(false))
     }
 
     useEffect(() => {
@@ -46,24 +46,25 @@ function Characters() {
 
     if (isLoading) {
         return (
-        <article>
-            <p>Loading...</p>
-        </article>
+            <article>
+                <p>Loading...</p>
+            </article>
         )
     }
 
     return (
         <section>
+            <h2 style={{ textTransform: 'uppercase' }}>Characters:</h2>
             <article>
                 {characters.map((character) => (
-                    <h2 key={character.url}>{character.name}</h2>
+                    <h3 key={character.url}>{character.name}</h3>
                 ))}
             </article>
             <h3>{countMessage}</h3>
-            <PaginationButtons  prevPage={prevPage} 
-                                nextPage={nextPage} 
-                                handlePreviousClick={handlePreviousClick} 
-                                handleNextClick={handleNextClick}/>
+            <PaginationButtons  prevPage={prevPage}
+                                nextPage={nextPage}
+                                handlePreviousClick={handlePreviousClick}
+                                handleNextClick={handleNextClick} />
         </section>
     )
 }

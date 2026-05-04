@@ -1,0 +1,8 @@
+.ctrl-buttons {
+  max-width: 350px;
+  margin: 0 auto;
+}
+
+.ctrl-buttons button:hover {
+  cursor: pointer;
+}

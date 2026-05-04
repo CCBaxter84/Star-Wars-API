@@ -1,3 +1,5 @@
+import './PaginationButtons.css'
+
 type Props = {
     prevPage: string | null,
     nextPage: string | null,
@@ -19,6 +21,7 @@ function PaginationButtons({
           Previous
         </button>
         <button disabled={!nextPage}
+                className="button"
                 onClick={handleNextClick}>
           Next
         </button>
