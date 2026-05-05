@@ -1,48 +1,14 @@
-import { useEffect, useState } from 'react'
-import type { ApiResponse } from '../types/character'
+import type { Character } from '../types/character'
 import PaginationButtons from './PaginationButtons'
+import usePaginatedFetch from '../hooks/usePaginatedList'
 
 function Characters() {
-    const [page, setPage] = useState(1)
-    const [data, setData] = useState<ApiResponse | null>(null)
-    const [isLoading, setIsLoading] = useState(true)
-
-    const totalCount = data?.count ?? 0
-    const characterCount = data?.results.length ?? 0
-    const characters = data?.results ?? []
-    const prevPage = data?.previous ?? null
-    const nextPage = data?.next ?? null
-
-    const pageSize = 10
-    const first = (page - 1) * pageSize + 1
-    const last = first + characterCount - 1
-    const countMessage = `${first} to ${last} of ${totalCount} characters`
-
-    function fetchCharacters(page: number) {
-        setIsLoading(true)
-        fetch(`https://swapi.py4e.com/api/people?page=${page}`)
-            .then(res => res.json())
-            .then(data => {
-                setData(data)
-                setPage(page)
-            })
-            .catch(err => console.error(err))
-            .finally(() => setIsLoading(false))
-    }
-
-    useEffect(() => {
-        fetchCharacters(page)
-    }, [])
-
-    function handlePreviousClick() {
-        if (!data?.previous) return
-        fetchCharacters(page - 1)
-    }
-
-    function handleNextClick() {
-        if (!data?.next) return
-        fetchCharacters(page + 1)
-    }
+  const { 
+    results, isLoading,
+    prevPage, nextPage, countMessage,
+    handlePreviousClick,
+    handleNextClick
+  } = usePaginatedFetch<Character>('https://swapi.py4e.com/api/people')
 
     if (isLoading) {
         return (
@@ -56,11 +22,11 @@ function Characters() {
         <section>
             <h2 style={{ textTransform: 'uppercase' }}>Characters:</h2>
             <article>
-                {characters.map((character) => (
-                    <h3 key={character.url}>{character.name}</h3>
+                {results.map(result => (
+                    <h3 key={result.url}>{result.name}</h3>
                 ))}
             </article>
-            <h3>{countMessage}</h3>
+            <h3>{`${countMessage} characters`}</h3>
             <PaginationButtons  prevPage={prevPage}
                                 nextPage={nextPage}
                                 handlePreviousClick={handlePreviousClick}
