@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import ControlButtons from './components/ControlButtons'
 import Characters from './components/Characters'
+import Planets from './components/Planets'
 
 function App() {
   const buttons = [
@@ -23,6 +24,7 @@ function App() {
       <ControlButtons buttons={buttons} 
                       onButtonClick={handleButtonClick}/>
       {activeButton === "Characters" && <Characters />}
+      {activeButton === "Planets" && <Planets />}
     </main>
   )
 }
