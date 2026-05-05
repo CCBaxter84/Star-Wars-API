@@ -1,7 +1,10 @@
 import type { Character } from '../types/character'
-import PaginationButtons from './PaginationButtons'
-import usePaginatedFetch from '../hooks/usePaginatedList'
+
 import Loading from './Loading'
+import PaginatedList from './PaginatedList'
+
+import usePaginatedFetch from '../hooks/usePaginatedList'
+
 
 function Characters() {
     const { 
@@ -9,25 +12,17 @@ function Characters() {
         prevPage, nextPage, countMessage,
         handlePreviousClick,
         handleNextClick
-    } = usePaginatedFetch<Character>('https://swapi.py4e.com/api/people')
+    } = usePaginatedFetch<Character>('https://swapi.tech/api/people')
 
     if (isLoading) return <Loading />
 
-    return (
-        <section>
-            <h2 style={{ textTransform: 'uppercase' }}>Characters:</h2>
-            <article>
-                {results.map(result => (
-                    <h3 key={result.url}>{result.name}</h3>
-                ))}
-            </article>
-            <h3>{`${countMessage} characters`}</h3>
-            <PaginationButtons  prevPage={prevPage}
-                                nextPage={nextPage}
-                                handlePreviousClick={handlePreviousClick}
-                                handleNextClick={handleNextClick} />
-        </section>
-    )
+    return <PaginatedList   results={results}
+                            entity="Characters"
+                            countMessage={countMessage}
+                            prevPage={prevPage}
+                            nextPage={nextPage}
+                            handlePreviousClick={handlePreviousClick}
+                            handleNextClick={handleNextClick} />
 }
 
 export default Characters

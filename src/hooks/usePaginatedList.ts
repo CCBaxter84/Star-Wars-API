@@ -6,20 +6,20 @@ function usePaginatedFetch<T>(url: string) {
   const [data, setData] = useState<ApiResponse<T> | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
-  const total = data?.count ?? 0 
+  const total = data?.total_records ?? 0 
   const count = data?.results.length ?? 0
   const results = data?.results ?? []
   const prevPage = data?.previous ?? null
   const nextPage = data?.next ?? null
 
-  const pageSize = count || 10
+  const pageSize = 10
   const first = (page - 1) * pageSize + 1
   const last = first + count - 1
   const countMessage = `${first} to ${last} of ${total}`
 
   function fetchData(page: number) {
     setIsLoading(true)
-    fetch(`${url}?page=${page}`)
+    fetch(`${url}?page=${page}&limit=${pageSize}`)
       .then(res => res.json())
       .then(data => {
         setData(data)
@@ -41,7 +41,7 @@ function usePaginatedFetch<T>(url: string) {
 
   useEffect(() => {
     fetchData(1)
-  }, [])
+  }, [url])
 
   return {
     page,
