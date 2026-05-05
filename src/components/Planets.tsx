@@ -1,5 +1,8 @@
 import type { Planet } from '../types/planet'
+
 import PaginationButtons from './PaginationButtons'
+import Loading from './Loading'
+
 import usePaginatedFetch from '../hooks/usePaginatedList'
 
 function Planets() {
@@ -10,13 +13,7 @@ function Planets() {
     handleNextClick
   } = usePaginatedFetch<Planet>('https://swapi.py4e.com/api/planets')
 
-  if (isLoading) {
-    return (
-        <article>
-            <p>Loading...</p>
-        </article>
-    )
-  }
+  if (isLoading) return <Loading />
 
   return (
     <section>

@@ -1,22 +1,17 @@
 import type { Character } from '../types/character'
 import PaginationButtons from './PaginationButtons'
 import usePaginatedFetch from '../hooks/usePaginatedList'
+import Loading from './Loading'
 
 function Characters() {
-  const { 
-    results, isLoading,
-    prevPage, nextPage, countMessage,
-    handlePreviousClick,
-    handleNextClick
-  } = usePaginatedFetch<Character>('https://swapi.py4e.com/api/people')
+    const { 
+        results, isLoading,
+        prevPage, nextPage, countMessage,
+        handlePreviousClick,
+        handleNextClick
+    } = usePaginatedFetch<Character>('https://swapi.py4e.com/api/people')
 
-    if (isLoading) {
-        return (
-            <article>
-                <p>Loading...</p>
-            </article>
-        )
-    }
+    if (isLoading) return <Loading />
 
     return (
         <section>
