@@ -1,9 +1,10 @@
 import type { Character } from '../types/character'
+import type { ApiResponse } from '../types/apiResponse'
 
 import Loading from './Loading'
 import PaginatedList from './PaginatedList'
 
-import usePaginatedFetch from '../hooks/usePaginatedList'
+import usePaginatedFetch from '../hooks/usePaginatedFetch'
 
 
 function Characters() {
@@ -12,7 +13,15 @@ function Characters() {
         prevPage, nextPage, countMessage,
         handlePreviousClick,
         handleNextClick
-    } = usePaginatedFetch<Character>('https://swapi.tech/api/people')
+    } = usePaginatedFetch<ApiResponse<Character>, Character>(
+        "https://swapi.tech/api/people",
+        {
+            getResults: data => data.results,
+            getTotal: data => data.total_records,
+            getNext: data => data.next,
+            getPrev: data => data.previous
+        }
+    )
 
     if (isLoading) return <Loading />
 

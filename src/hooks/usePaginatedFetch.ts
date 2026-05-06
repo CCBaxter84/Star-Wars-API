@@ -1,24 +1,28 @@
 import { useState, useEffect } from "react"
-import type { ApiResponse } from "../types/apiResponse"
+import type { Extractors } from "../types/extractors"
 
-function usePaginatedFetch<T>(url: string) {
+function usePaginatedFetch<TData, TResult>(
+  url: string,
+  { getResults, getTotal, getNext, getPrev }: Extractors<TData, TResult>
+) {
   const [page, setPage] = useState(1)
-  const [data, setData] = useState<ApiResponse<T> | null>(null)
+  const [data, setData] = useState<TData | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
-  const total = data?.total_records ?? 0 
-  const count = data?.results.length ?? 0
-  const results = data?.results ?? []
-  const prevPage = data?.previous ?? null
-  const nextPage = data?.next ?? null
+  const results = data ? getResults(data) : []
+  const total = data ? getTotal(data) : 0
+  const prevPage = data ? getPrev(data) : null
+  const nextPage = data ? getNext(data) : null
 
   const pageSize = 10
+  const count = results.length
   const first = (page - 1) * pageSize + 1
   const last = first + count - 1
   const countMessage = `${first} to ${last} of ${total}`
 
   function fetchData(page: number) {
     setIsLoading(true)
+
     fetch(`${url}?page=${page}&limit=${pageSize}`)
       .then(res => res.json())
       .then(data => {
@@ -29,13 +33,13 @@ function usePaginatedFetch<T>(url: string) {
       .finally(() => setIsLoading(false))
   }
 
-    function handlePreviousClick() {
-    if (!data?.previous) return
+  function handlePreviousClick() {
+    if (!prevPage) return
     fetchData(page - 1)
   }
 
   function handleNextClick() {
-    if (!data?.next) return
+    if (!nextPage) return
     fetchData(page + 1)
   }
 
@@ -47,7 +51,6 @@ function usePaginatedFetch<T>(url: string) {
     page,
     data,
     isLoading,
-    fetchData,
     results,
     prevPage,
     nextPage,

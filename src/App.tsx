@@ -4,6 +4,7 @@ import ControlButtons from './components/ControlButtons'
 import Characters from './components/Characters'
 import Planets from './components/Planets'
 import Species from './components/Species'
+import Films from './components/Films'
 
 function App() {
   const buttons = [
@@ -17,7 +18,8 @@ function App() {
   const views = new Map<string, React.ComponentType>([
     ["Characters", Characters],
     ["Planets", Planets],
-    ["Species", Species]
+    ["Species", Species],
+    ["Films", Films]
   ])
   const ActiveComponent = views.get(activeButton)
 
