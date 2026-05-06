@@ -14,6 +14,12 @@ function App() {
   ]
 
   const [activeButton, setActiveButton] = useState("Characters")
+  const views = new Map<string, React.ComponentType>([
+    ["Characters", Characters],
+    ["Planets", Planets],
+    ["Species", Species]
+  ])
+  const ActiveComponent = views.get(activeButton)
 
   function handleButtonClick(button: string) {
     setActiveButton(button)
@@ -24,9 +30,7 @@ function App() {
       <h1 className="title">Star Wars API</h1>
       <ControlButtons buttons={buttons} 
                       onButtonClick={handleButtonClick}/>
-      {activeButton === "Characters" && <Characters />}
-      {activeButton === "Planets" && <Planets />}
-      {activeButton === "Species" && <Species />}
+      {ActiveComponent && <ActiveComponent />}
     </main>
   )
 }
