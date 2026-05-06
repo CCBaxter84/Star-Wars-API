@@ -3,6 +3,7 @@ import './App.css'
 import ControlButtons from './components/ControlButtons'
 import Characters from './components/Characters'
 import Planets from './components/Planets'
+import Species from './components/Species'
 
 function App() {
   const buttons = [
@@ -25,6 +26,7 @@ function App() {
                       onButtonClick={handleButtonClick}/>
       {activeButton === "Characters" && <Characters />}
       {activeButton === "Planets" && <Planets />}
+      {activeButton === "Species" && <Species />}
     </main>
   )
 }
