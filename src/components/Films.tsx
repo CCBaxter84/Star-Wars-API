@@ -1,14 +1,13 @@
 import useFetch from "../hooks/useFetch"
-
 import type { FilmsApiResponse, Film } from "../types/film"
-
 import Loading from "./Loading"
 
 function Films() {
-  const { data, isLoading } = useFetch<FilmsApiResponse>("https://swapi.tech/api/films")
+  const URL = "https://swapi.tech/api/films"
+  const { data, isLoading } = useFetch<FilmsApiResponse>(URL)
 
   if (isLoading) return <Loading />
-  
+
   return (
     <div>
       <h2 style={{ textTransform: 'uppercase' }}>Films:</h2>
