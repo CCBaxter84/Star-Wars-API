@@ -131,3 +131,7 @@ code {
   background-color: var(--bg);
   cursor: pointer;
 }
+
+.title {
+  text-transform: capitalize;
+}
