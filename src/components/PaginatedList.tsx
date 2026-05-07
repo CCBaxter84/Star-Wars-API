@@ -17,7 +17,7 @@ function PaginatedList({
 }: Props) {
   return (
     <section>
-      <h2 style={{ textTransform: 'uppercase' }}>{entity}:</h2>
+      <h2 className="title">{entity}:</h2>
       <article>
         {results.map(result => (
             <h3 key={result.url}>{result.name}</h3>

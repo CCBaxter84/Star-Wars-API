@@ -10,7 +10,7 @@ function Films() {
 
   return (
     <div>
-      <h2 style={{ textTransform: 'uppercase' }}>Films:</h2>
+      <h2 className="title">Films:</h2>
       <article>
         {data?.result?.map((film: Film) => (
           <h3 key={film._id}>{film.properties.title}</h3>
