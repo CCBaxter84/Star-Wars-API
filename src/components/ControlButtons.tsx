@@ -1,5 +1,3 @@
-import './ControlsButtons.css'
-
 type Props = {
   buttons: string[],
   onButtonClick: (button: string) => void,
