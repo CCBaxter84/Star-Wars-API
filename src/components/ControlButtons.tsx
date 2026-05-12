@@ -8,10 +8,10 @@ type Props = {
 function ControlButtons({ buttons, onButtonClick }: Props) {
   return (
     <nav  style={{ marginBottom: '2rem' }}
-          className="is-flex is-justify-content-space-between nav-buttons">
+          className="flex justify-space-between gap-4">
       {buttons.map((button) => (
         <button key={button} 
-                className="button" 
+                className="btn btn-primary"
                 onClick={() => onButtonClick(button)}>
           {button}
         </button>
