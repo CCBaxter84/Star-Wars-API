@@ -1,5 +1,3 @@
-import './PaginationButtons.css'
-
 type Props = {
     prevPage: string | null,
     nextPage: string | null,
@@ -14,14 +12,15 @@ function PaginationButtons({
     handleNextClick }: Props
 ) {
   return (
-    <section className="ctrl-buttons">
-      <article  className="is-flex is-justify-content-space-between">
-        <button disabled={!prevPage}
+    <section className="max-w-[350px] w-full">
+      <article  className="flex justify-space-between gap-4">
+        <button className="btn btn-primary"
+                disabled={!prevPage}
                 onClick={handlePreviousClick}>
           Previous
         </button>
         <button disabled={!nextPage}
-                className="button"
+                className="btn btn-primary"
                 onClick={handleNextClick}>
           Next
         </button>
