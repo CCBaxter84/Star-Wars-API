@@ -1,3 +1,5 @@
+import Button from "./Button"
+
 type Props = {
     prevPage: string | null,
     nextPage: string | null,
@@ -14,24 +16,14 @@ function PaginationButtons({
   return (
     <section className="w-full flex justify-center mt-4">
       <article  className="flex justify-between gap-4 w-[100%]">
-        <button className="    
-                  btn btn-primary
-                  disabled:opacity-50
-                  disabled:cursor-not-allowed
-                  disabled:bg-gray-400"
-                disabled={!prevPage}
-                onClick={handlePreviousClick}>
+        <Button disabled={!prevPage} 
+                handleClick={handlePreviousClick}>
           Previous
-        </button>
-        <button disabled={!nextPage}
-                className="    
-                  btn btn-primary
-                  disabled:opacity-50
-                  disabled:cursor-not-allowed
-                  disabled:bg-gray-400"
-                onClick={handleNextClick}>
+        </Button>
+        <Button disabled={!nextPage} 
+                handleClick={handleNextClick}>
           Next
-        </button>
+        </Button>
       </article>
     </section>
   )
