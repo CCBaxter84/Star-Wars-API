@@ -26,7 +26,7 @@ function Species() {
     if (isLoading) return <Loading />
 
     return <PaginatedList   results={results}
-                            entity="Characters"
+                            entity="Species"
                             countMessage={countMessage}
                             prevPage={prevPage}
                             nextPage={nextPage}
