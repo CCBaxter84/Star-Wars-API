@@ -28,7 +28,7 @@ function App() {
 
   return (
     <main className="p-4 flex flex-col items-center gap-4">
-      <h1 className="text-2xl font-bold">Star Wars API</h1>
+      <h1 className="text-4xl font-bold">Star Wars API</h1>
       <ControlButtons buttons={buttons} 
                       onButtonClick={handleButtonClick}/>
       {ActiveComponent && <ActiveComponent />}

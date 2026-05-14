@@ -16,14 +16,17 @@ function PaginatedList({
   handlePreviousClick, handleNextClick 
 }: Props) {
   return (
-    <section>
-      <h2 className="title">{entity}:</h2>
-      <article>
+    <section className="w-lg flex flex-col items-center gap-4">
+      <h2 className="text-2xl font-bold m-3">{entity}:</h2>
+      <article className="mb-6">
         {results.map(result => (
-            <h3 key={result.url}>{result.name}</h3>
+            <h3 key={result.url} 
+                className="text-lg font-semibold">
+              {result.name}
+            </h3>
         ))}
       </article>
-      <h3>{`${countMessage} ${entity}`}</h3>
+      <h3 className="font-bold italic">{`${countMessage} ${entity}`}</h3>
       <PaginationButtons  prevPage={prevPage}
                           nextPage={nextPage}
                           handlePreviousClick={handlePreviousClick}

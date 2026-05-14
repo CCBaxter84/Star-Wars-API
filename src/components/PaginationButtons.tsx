@@ -12,8 +12,8 @@ function PaginationButtons({
     handleNextClick }: Props
 ) {
   return (
-    <section className="max-w-[350px] w-full">
-      <article  className="flex justify-space-between gap-4">
+    <section className="w-full flex justify-center mt-4">
+      <article  className="flex justify-between gap-4 w-[100%]">
         <button className="btn btn-primary"
                 disabled={!prevPage}
                 onClick={handlePreviousClick}>
