@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import './App.css'
 import ControlButtons from './components/ControlButtons'
 import Characters from './components/Characters'
 import Planets from './components/Planets'
