@@ -10,10 +10,13 @@ function Films() {
 
   return (
     <div>
-      <h2 className="title">Films:</h2>
+      <h2 className="text-2xl font-bold m-3">Films:</h2>
       <article>
         {data?.result?.map((film: Film) => (
-          <h3 key={film._id}>{film.properties.title}</h3>
+          <h3 key={film._id}
+              className="text-lg font-semibold">
+            {film.properties.title}
+          </h3>
         ))}
       </article>
     </div>
