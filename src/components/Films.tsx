@@ -9,7 +9,7 @@ function Films() {
   if (isLoading) return <Loading />
 
   return (
-    <div>
+    <section className="w-lg flex flex-col items-center gap-4">
       <h2 className="text-2xl font-bold m-3">Films:</h2>
       <article>
         {data?.result?.map((film: Film) => (
@@ -19,7 +19,7 @@ function Films() {
           </h3>
         ))}
       </article>
-    </div>
+    </section>
   )
 }
 
